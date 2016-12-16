@@ -38,3 +38,19 @@ captures/
 
 # Keystore files
 *.jks
+PPLFinder/.idea/compiler.xml
+PPLFinder/gradlew
+PPLFinder/gradle/wrapper/gradle-wrapper.properties
+PPLFinder/gradle/wrapper/gradle-wrapper.jar
+PPLFinder/gradle.properties
+PPLFinder/settings.gradle
+PPLFinder/gradlew.bat
+PPLFinder/app/proguard-rules.pro
+PPLFinder/.idea/vcs.xml
+PPLFinder/.idea/runConfigurations.xml
+PPLFinder/.idea/modules.xml
+PPLFinder/.idea/misc.xml
+PPLFinder/.idea/gradle.xml
+PPLFinder/.idea/copyright/profiles_settings.xml
+PPLFinder/app/src/androidTest/java/pt/isec/a21240321/pplfinder/ExampleInstrumentedTest.java
+PPLFinder/app/src/test/java/pt/isec/a21240321/pplfinder/ExampleUnitTest.java
