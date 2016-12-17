@@ -54,3 +54,6 @@ PPLFinder/.idea/gradle.xml
 PPLFinder/.idea/copyright/profiles_settings.xml
 PPLFinder/app/src/androidTest/java/pt/isec/a21240321/pplfinder/ExampleInstrumentedTest.java
 PPLFinder/app/src/test/java/pt/isec/a21240321/pplfinder/ExampleUnitTest.java
+PPLFinder/.idea/inspectionProfiles/Project_Default.xml
+PPLFinder/.idea/inspectionProfiles/profiles_settings.xml
+PPLFinder/app/google-services.json
