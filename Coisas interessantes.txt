@@ -1,0 +1,3 @@
+Style nos botoes:
+http://stackoverflow.com/questions/10056843/can-i-make-an-android-button-template
+https://developer.android.com/guide/topics/ui/controls/button.html#Style

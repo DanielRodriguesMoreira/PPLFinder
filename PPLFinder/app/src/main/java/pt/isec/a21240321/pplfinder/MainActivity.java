@@ -2,12 +2,19 @@ package pt.isec.a21240321.pplfinder;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
@@ -22,14 +29,25 @@ import com.google.android.gms.common.api.Status;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 public class MainActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener{
 
-    private static final int RC_SIGN_IN = 10;
+    private static final int RC_SIGN_IN = 20;
     private static final String TAG = "";
     SignInButton mSignInButton;
     GoogleApiClient mGoogleApiClient;
     TextView  mStatusTextView;
     Button mSignOutButton;
+    public ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +74,8 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.On
         mSignOutButton.setOnClickListener(this);
 
         mStatusTextView = (TextView) findViewById(R.id.StatusTextView);
+
+        mImageView = (ImageView) findViewById(R.id.imageView);
     }
 
     @Override
@@ -111,9 +131,46 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.On
 
             mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             mStatusTextView.setText(acct.getDisplayName() + " - " + acct.getId());
+
+            //iv.setImageBitmap(getImageBitmap(acct.getPhotoUrl().toString()));
+            //iv.setImageURI(acct.getPhotoUrl());
+            Uri uri = acct.getPhotoUrl();
+            mStatusTextView.setText(uri.toString());
+
+            if(uri.toString() != null)
+                new DownloadImageTask(mImageView).execute(uri.toString());
+
+
+
+
         } else {
             // Signed out, show unauthenticated UI.
             //updateUI(false);
+        }
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 }
