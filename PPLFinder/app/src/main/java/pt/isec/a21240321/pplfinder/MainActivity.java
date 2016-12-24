@@ -135,11 +135,12 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.On
             //iv.setImageBitmap(getImageBitmap(acct.getPhotoUrl().toString()));
             //iv.setImageURI(acct.getPhotoUrl());
             Uri uri = acct.getPhotoUrl();
-            mStatusTextView.setText(uri.toString());
 
-            if(uri.toString() != null)
+
+            if(uri != null) {
+                mStatusTextView.setText(uri.toString());
                 new DownloadImageTask(mImageView).execute(uri.toString());
-
+            }
 
 
 
