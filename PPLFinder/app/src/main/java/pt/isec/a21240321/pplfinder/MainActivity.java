@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -67,8 +68,10 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.On
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
+        /*
         mSignInButton = (SignInButton)findViewById(R.id.sign_in_button);
         mSignInButton.setOnClickListener(this);
+
 
         mSignOutButton = (Button)findViewById(R.id.button_sign_out);
         mSignOutButton.setOnClickListener(this);
@@ -76,6 +79,16 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.On
         mStatusTextView = (TextView) findViewById(R.id.StatusTextView);
 
         mImageView = (ImageView) findViewById(R.id.imageView);
+        */
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        getMenuInflater().inflate(R.menu.menu_messages, menu);
+        getMenuInflater().inflate(R.menu.menu_filters, menu);
+        getMenuInflater().inflate(R.menu.menu_refresh, menu);
+        return true;
     }
 
     @Override
@@ -90,10 +103,11 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.On
                     signIn();
                     break;
                     // ...
+            /*
             case R.id.button_sign_out:
                     signOut();
                     break;
-
+            */
         }
     }
 

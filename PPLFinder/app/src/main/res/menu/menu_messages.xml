@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="@string/messages"
+        android:id="@+id/menuMessages"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_messages">
+    </item>
+</menu>

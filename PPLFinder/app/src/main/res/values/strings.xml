@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">PPL Finder</string>
+    <string name="settings">Settings</string>
+    <string name="refresh">Refresh</string>
+    <string name="messages">Messages</string>
+    <string name="filters">Filters</string>
+
+
+
     <string name="hello_world">Hello World!</string>
     <string name="signed_in_fmt">Estás dentro</string>
     <string name="signed_out_fmt">Estás fora</string>
+
 </resources>

@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">PPL Finder</string>
+    <string name="settings">Paramètres</string>
+    <string name="refresh">Rafraîchir</string>
+    <string name="messages">Messages</string>
+    <string name="filters">Filtres</string>
+
     <string name="hello_world">Bonjour le monde!</string>
 </resources>
