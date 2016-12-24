@@ -4,6 +4,8 @@
     <string name="refresh">Refresh</string>
     <string name="messages">Messages</string>
     <string name="filters">Filters</string>
+    <string name="error_connection_title">Connection error</string>
+    <string name="error_connection_message">No internet connection</string>
 
 
 

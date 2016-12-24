@@ -4,6 +4,8 @@
     <string name="refresh">Atualizar</string>
     <string name="messages">Mensagens</string>
     <string name="filters">Filtros</string>
+    <string name="error_connection_title">Erro de conexão</string>
+    <string name="error_connection_message">Sem ligação à Internet</string>
 
     <string name="hello_world">Olá Mundo!</string>
 </resources>
