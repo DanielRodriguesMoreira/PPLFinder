@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.auth.api.Auth;
@@ -85,6 +86,8 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.O
             }
 
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("NOME", acct.getDisplayName());
+            intent.putExtra("GIVENNAME", acct.getGivenName());
             startActivity(intent);
 
         } else {

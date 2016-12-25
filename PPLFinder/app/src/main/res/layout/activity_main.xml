@@ -11,4 +11,12 @@
     android:orientation="vertical"
     tools:context="pt.isec.a21240321.pplfinder.MainActivity"
     android:background="@drawable/background">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.MapFragment"/>
+
 </LinearLayout>
