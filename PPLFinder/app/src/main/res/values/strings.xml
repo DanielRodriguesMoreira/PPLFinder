@@ -6,7 +6,9 @@
     <string name="filters">Filters</string>
     <string name="error_connection_title">Connection error</string>
     <string name="error_connection_message">No internet connection</string>
-
+    //Excepções
+    <string name="firebase_error_title">Firebase Error</string>
+    <string name="firebase_error_message">Error accessing Firebase Database</string>
 
 
     <string name="hello_world">Hello World!</string>

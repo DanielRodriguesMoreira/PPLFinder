@@ -1,10 +1,6 @@
 package pt.isec.a21240321.pplfinder;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -12,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.auth.api.Auth;
@@ -22,6 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import pt.isec.a21240321.pplfinder.Exceptions.FirebaseException;
 
 public class LoginActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener{
 
@@ -52,7 +49,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.O
                 .build();
         // </editor-fold>
 
-        mSignInButton = (SignInButton )findViewById(R.id.sign_in_button);
+        mSignInButton = (SignInButton)findViewById(R.id.sign_in_button);
         mSignInButton.setOnClickListener(new SignInListener());
     }
 
@@ -71,13 +68,50 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.O
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount userAccoutInfo = result.getSignInAccount();
 
-            GoogleSignInAccount acct = result.getSignInAccount();
+            // <editor-fold defaultstate="collapsed" desc="Create User">
+            // </editor-fold>
+
+            // <editor-fold defaultstate="collapsed" desc="Adicionar ao Firebase">
+
+            //Se já existir vai buscar todas as informações e altera só o activo = true
+            //Se não existir cria um novo e adiciona-o lá
+
+            try {
+                FirebaseConnection firebaseConnection = new FirebaseConnection();
+                User user = firebaseConnection.getUserById(userAccoutInfo.getId());
+                if(user == null){
+                    user = new User(userAccoutInfo.getId(), userAccoutInfo.getDisplayName(),
+                            userAccoutInfo.getEmail(), true);
+                    firebaseConnection.addUserToFirebase(user);
+                }
 
 
+            } catch (FirebaseException e) {
+                ErrorDialog errorDialog = new ErrorDialog(R.string.firebase_error_title,
+                        R.string.firebase_error_message, R.drawable.ic_error);
+                errorDialog.show(getFragmentManager(), "FirebaseException");
+                if(errorDialog.isToClose())
+                    finish();
+            }
+
+
+                /*
+                DatabaseReference mSpotFoodDataBaseReference = FirebaseDatabase.getInstance().getReference();
+                User user = new User("1");
+                mSpotFoodDataBaseReference.child("USERS").child(user.getId()).setValue(user);
+                */
+            // </editor-fold>
+
+            // <editor-fold defaultstate="collapsed" desc="Chamar MainActivity">
+            // </editor-fold>
+            
             //iv.setImageBitmap(getImageBitmap(acct.getPhotoUrl().toString()));
             //iv.setImageURI(acct.getPhotoUrl());
-            Uri uri = acct.getPhotoUrl();
+
+
+            Uri uri = userAccoutInfo.getPhotoUrl();
 
 
             if(uri != null) {
@@ -85,14 +119,10 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.O
                 //new MainActivity.DownloadImageTask(mImageView).execute(uri.toString());
             }
 
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("NOME", acct.getDisplayName());
-            intent.putExtra("GIVENNAME", acct.getGivenName());
-            startActivity(intent);
-
-        } else {
-            // Signed out, show unauthenticated UI.
-            //updateUI(false);
+            //Intent intent = new Intent(this, MainActivity.class);
+            //intent.putExtra("NOME", acct.getDisplayName());
+            //intent.putExtra("GIVENNAME", acct.getGivenName());
+            //startActivity(intent);
         }
     }
 
@@ -104,8 +134,11 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.O
     // <editor-fold defaultstate="collapsed" desc="Internet Connection">
     private void checkNetworkConnection(){
         if(!hasNetworkConnection()) {
-            internetConnectionErrorDialog md = new internetConnectionErrorDialog();
-            md.show(getFragmentManager(), "TAG");
+            ErrorDialog errorDialog = new ErrorDialog(R.string.error_connection_title,
+                    R.string.error_connection_message, R.drawable.ic_error);
+            errorDialog.show(getFragmentManager(), "NoInternetConnection");
+            if(errorDialog.isToClose())
+                finish();
         }
     }
 
@@ -117,22 +150,6 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.O
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
-    class internetConnectionErrorDialog extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.error_connection_title)
-                    .setMessage(R.string.error_connection_message)
-                    .setIcon(R.drawable.ic_error)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            finish();
-                        }
-                    });
-            return builder.create();
-        }
-    }
     // </editor-fold>
 
     class SignInListener implements View.OnClickListener {

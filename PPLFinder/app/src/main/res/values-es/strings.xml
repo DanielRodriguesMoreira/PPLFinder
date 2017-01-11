@@ -7,6 +7,10 @@
     <string name="error_connection_title">Error de conexión</string>
     <string name="error_connection_message">Sin conexión a Internet</string>
 
+    //Excepções
+    <string name="firebase_error_title">Firebase Error</string>
+    <string name="firebase_error_message">Error al acceder a Base De Datos Firebase</string>
+
     <string name="hello_world">Hola Mundo!</string>
 
 </resources>
